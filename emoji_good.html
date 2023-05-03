@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html> <html lang="ko"> <head> <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>이모지 퀴즈</title> <style> .quiz-container { display: none; } .quiz-container.active { display: block; } </style> 
+  </head> <body> 
+    <div id="quiz1" class="quiz-container active"> 
+      <p>문제 1: 🎈</p> <input type="text" id="answer1"> 
+    </div> <div id="quiz2" class="quiz-container"> 
+      <p>문제 2: 🎥</p> <input type="text" id="answer2"> </div> 
+    <div id="quiz3" class="quiz-container"> <p>문제 3: 🍿</p> <input type="text" id="answer3"> </div> 
+      <button id="prevBtn">이전</button> <button id="nextBtn">다음</button>
+
+<script>
+    const quizzes = document.querySelectorAll('.quiz-container');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentQuiz = 0;
+
+    function showQuiz(index) {
+        quizzes.forEach((quiz, i) => {
+            quiz.classList.toggle('active', i === index);
+        });
+    }
+
+    prevBtn.addEventListener('click', () => {
+        currentQuiz--;
+        if (currentQuiz < 0) {
+            currentQuiz = 0;
+        }
+        showQuiz(currentQuiz);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentQuiz++;
+        if (currentQuiz >= quizzes.length) {
+            checkAnswers();
+        } else {
+            showQuiz(currentQuiz);
+        }
+    });
+
+    function checkAnswers() {
+        const correctAnswers = ['풍선', '영화', '팝콘'];
+        let score = 0;
+
+        correctAnswers.forEach((answer, i) => {
+            const userAnswer = document.getElementById(`answer${i + 1}`).value;
+            if (userAnswer === answer) {
+                score += 5;
+            }
+        });
+
+        alert(`당신의 점수는 ${score}점 입니다.`);
+    }
+</script>
+</body> </html> 
